@@ -16,26 +16,46 @@ A powerful and parallelized R-based tool for annotating SNP rsIDs using the [SNP
 
 ## 🐋 Dockerized Execution
 
-Run the script using Docker with a Conda environment:
+Run the R script via Python controller script at `/home/milad/milad/Varient-docker/pyscript/snpedia/vc.py`:
 
 ```bash
-# Define variables
-local_volume_path="/home/milad/milad/Varient-docker/pyscript/snpedia"
-container_volume_path="/data"
-container_image="disvar_v1"
-r_script_name="run_snp_batch.R"
-conda_env="r-environment"
+python3 /home/milad/milad/Varient-docker/pyscript/snpedia/vc.py
+```
 
-# Run the container
-docker run --rm \
-  -v "$local_volume_path:$container_volume_path" \
-  $container_image \
-  bash -c "source activate $conda_env && Rscript $container_volume_path/$r_script_name"
+This Python script constructs and runs the Docker command:
+
+```python
+import subprocess
+
+local_volume_path = "/home/milad/milad/Varient-docker/pyscript/snpedia"
+container_volume_path = "/data"
+container_image = "disvar_v1"
+r_script_name = "run_snp_batch.R"
+conda_env = "r-environment"
+
+docker_cmd = [
+    "docker", "run", "--rm",
+    "-v", f"{local_volume_path}:{container_volume_path}",
+    container_image,
+    "bash", "-c",
+    f"source activate {conda_env} && Rscript {container_volume_path}/{r_script_name}"
+]
+
+subprocess.run(docker_cmd, check=True)
 ```
 
 ---
 
 ## 📂 File Structure
+
+```
+snpedia/
+├── input.txt                 # Your rsID list, one per line or in format: rsID,(GENO)
+├── run_snp_batch.R          # Main R script
+├── output.json              # Combined output file
+├── vc.py                    # Python script to launch Docker container
+└── batch_results/           # Folder containing JSON output per batch
+```
 
 ```
 snpedia/
