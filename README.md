@@ -23,7 +23,9 @@ python3 /home/milad/milad/Varient-docker/pyscript/snpedia/vc.py
 ```
 
 This Python script constructs and runs the Docker command:
-
+```bash
+docker pull cosmos9526/snp_calling:latest
+```
 ```python
 import subprocess
 
