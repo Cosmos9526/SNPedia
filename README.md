@@ -57,24 +57,14 @@ snpedia/
 └── batch_results/           # Folder containing JSON output per batch
 ```
 
-```
-snpedia/
-├── input.txt                 # Your rsID list, one per line or in format: rsID,(GENO)
-├── run_snp_batch.R          # Main R script
-├── output.json              # Combined output file
-└── batch_results/           # Folder containing JSON output per batch
-```
-
----
-
 ## 📥 Input Format
 
 Plain text file `input.txt`:
 
 ```
 rs2476601
-rs1234,(A;T)
 rs7025486
+rs7025486(A;A)
 ```
 
 Each line: either just an `rsID` or `rsID,(GENOTYPE)` format.
